@@ -63,3 +63,31 @@ export type BlogPost = {
 };
 
 export type SessionType = { value: string; label: string };
+
+/**
+ * One role on the CV. Copy must stay true to the CV: leave `period` out when
+ * the CV gives no dates rather than guessing one.
+ */
+export type Experience = {
+  id: string;
+  role: string;
+  organization: string;
+  location?: string;
+  /** As the CV states it, e.g. "2015 – Present". Omit when the CV has no dates. */
+  period?: string;
+  /** Marks a role the CV describes as ongoing. Shown as "Current" when there is no `period`. */
+  current?: boolean;
+  highlights: string[];
+  /** Short chips under the role, e.g. "Weddings", "Editing". */
+  focus: string[];
+};
+
+/** A labelled group of short items, e.g. video editing software. */
+export type SkillGroup = { id: string; label: string; items: string[] };
+
+export type Education = {
+  qualification: string;
+  institution: string;
+  /** "In progress", or the years as the CV states them. */
+  status: string;
+};

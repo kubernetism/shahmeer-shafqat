@@ -2,6 +2,7 @@ import { nav, services, site } from "@/content/site";
 import { SiteHeader } from "@/components/site-header";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
+import { Experience } from "@/components/sections/experience";
 import { Portfolio } from "@/components/sections/portfolio";
 import { Films } from "@/components/sections/films";
 import { Services } from "@/components/sections/services";
@@ -23,6 +24,7 @@ export default function Home() {
       <main id="main">
         <Hero />
         <About />
+        <Experience />
         <Portfolio />
         <Films />
         <Services services={services} />

@@ -7,6 +7,8 @@
  */
 import type {
   BlogPost,
+  Education,
+  Experience,
   Film,
   NavItem,
   Photo,
@@ -14,6 +16,7 @@ import type {
   PortfolioItem,
   Service,
   SessionType,
+  SkillGroup,
   Stat,
 } from "./types";
 
@@ -79,13 +82,14 @@ import bridalTealThrone from "@/public/images/work/bridal-teal-throne.webp";
 export const site = {
   name: "Shah Meer Shafqat",
   brand: "Weddings by Meer",
-  role: "Wedding photographer & filmmaker",
+  role: "Photographer & videographer",
   /** The giant name across the bottom of the hero. `short` is used on phones. */
   wordmark: { full: "SHAH MEER", short: "MEER" },
   url: "https://shahmeershafqat.com", // TODO: confirm with client (final domain)
-  location: "Based in Pakistan · Travels for weddings", // TODO: confirm with client (city)
-  /** No inbox yet. Set this (e.g. "hello@shahmeershafqat.com") and email links appear in the menu, contact card and footer. */
-  email: undefined as string | undefined,
+  /** From the CV: the studio is at Deans Trade Center, Peshawar Cantt. */
+  location: "Studio in Peshawar Cantt · Peshawar, Pakistan",
+  /** From the CV, approved for publishing. Shows email links in the menu, contact card and footer; set to `undefined` to hide them. */
+  email: "Shahmeer0300@gmail.com" as string | undefined,
   /** Confirmed by the client. WhatsApp is the recommended way to get in touch. */
   phone: { display: "+92 312 2211268", tel: "tel:+923122211268" },
   whatsapp: {
@@ -101,14 +105,15 @@ export const site = {
   },
   copyrightYear: 2026,
   seo: {
-    title: "Shah Meer Shafqat · Wedding Photographer & Filmmaker",
+    title: "Shah Meer Shafqat · Wedding Photographer & Videographer in Peshawar",
     description:
-      "Wedding photography and films by Shah Meer Shafqat (Weddings by Meer): baraat, nikkah, walima, pre-wedding, bridal portraits and brand campaigns.",
+      "Weddings by Meer is Shah Meer Shafqat's photo and video studio in Peshawar Cantt: weddings, bridal portraits, documentaries and brand campaigns, shot and edited in-house.",
   },
 } as const;
 
 export const nav: NavItem[] = [
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Films", href: "#films" },
   { label: "Events", href: "#services" },
@@ -120,7 +125,7 @@ export const nav: NavItem[] = [
 /* ------------------------------------------------------------------ */
 
 export const hero = {
-  eyebrow: "Wedding photographer & filmmaker",
+  eyebrow: "Photographer & videographer · Peshawar",
   headline: ["Capturing", "stories that", "last a lifetime"],
   cta: { label: "View Portfolio", href: "#portfolio" },
   image: {
@@ -142,9 +147,9 @@ export const hero = {
 /* ------------------------------------------------------------------ */
 
 export const about = {
-  // TODO: confirm with client (bio copy)
+  // Facts from the CV. TODO: confirm wording with client
   statement:
-    "Photography captures emotions beyond beautiful pictures. Whether it is a baraat, a quiet nikkah, a family portrait or a brand campaign,",
+    "Photography and film capture emotions beyond beautiful pictures. From my studio in Peshawar Cantt, I shoot and edit baraats, quiet nikkahs, documentaries and brand campaigns.",
   statementMuted:
     "I focus on genuine moments that reflect who you are, and turn them into memories that last.",
   signature: "Shah Meer Shafqat, founder of Weddings by Meer",
@@ -155,7 +160,8 @@ export const about = {
   } satisfies Photo,
 };
 
-// TODO: confirm with client (all three figures are from the design mockup)
+// "10+ years" is supported by the CV (earliest dated role: 2015).
+// TODO: confirm with client (the other two figures are from the design mockup)
 export const stats: Stat[] = [
   {
     value: "10+",
@@ -183,6 +189,85 @@ export const stats: Stat[] = [
       alt: "Bride seated on a carved white bench between sheer curtains",
       focus: "50% 55%",
     },
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* Experience (source: cv/Shah_Meer_Shafqat_Arbab_ATS_CV.docx)          */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Keep this true to the CV. Two roles have no dates on the CV, so they carry
+ * no `period`; add one only when the client confirms it.
+ */
+export const experience = {
+  eyebrow: "Experience",
+  title: "Behind the camera and in the edit",
+  intro:
+    "I own and run Weddings by Meer, a photo and video studio in Peshawar Cantt. Alongside weddings, my work spans documentaries, digital media and educational photography, and I edit everything I shoot.",
+  skillsTitle: "Skills",
+  studyLabel: "Study",
+};
+
+export const roles: Experience[] = [
+  {
+    id: "weddings-by-meer",
+    role: "Studio Owner · Senior Videographer & Editor",
+    organization: "Weddings by Meer",
+    location: "Peshawar Cantt",
+    current: true,
+    highlights: [
+      "Own and operate the Weddings by Meer studio at Deans Trade Center, Peshawar Cantt.",
+      "Provide videography and editing for weddings and documentary projects.",
+    ],
+    focus: ["Weddings", "Documentaries", "Editing"],
+  },
+  {
+    id: "jdn-ittehad",
+    role: "Videographer & Video Editor",
+    organization: "JDN Ittehad Digital Network / Daily Jihad",
+    location: "Peshawar",
+    highlights: ["Shot and edited video for digital media and news-related content."],
+    focus: ["Digital media", "News", "Editing"],
+  },
+  {
+    id: "peshawar-model",
+    role: "Photographer",
+    organization: "Peshawar Model Educational Institute",
+    location: "All branches",
+    period: "2015 – Present",
+    current: true,
+    highlights: ["Provide photography across the branches of the educational institute."],
+    focus: ["Events", "Educational photography"],
+  },
+];
+
+export const toolkit: SkillGroup[] = [
+  {
+    id: "video",
+    label: "Video editing",
+    items: ["Adobe Premiere", "Adobe After Effects", "EDIUS Pro", "Filmora", "ProShow Gold", "ProShow Producer"],
+  },
+  {
+    id: "photo",
+    label: "Photo editing",
+    items: ["Adobe Photoshop", "Adobe Lightroom Classic"],
+  },
+];
+
+/** Useful for clients: the languages he can work in on the day. */
+export const languages: SkillGroup = {
+  id: "languages",
+  label: "Languages",
+  items: ["English", "Urdu", "Pashto", "Hindko", "Punjabi"],
+};
+
+/** Only the study that relates to the work; school records stay on the CV. */
+export const education: Education[] = [
+  {
+    qualification: "Mass Communication",
+    institution: "Allama Iqbal Open University",
+    status: "In progress",
   },
 ];
 
@@ -427,6 +512,7 @@ export const footer = {
   links: [
     { label: "Home", href: "#top" },
     { label: "About", href: "#about" },
+    { label: "Experience", href: "#experience" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Blog", href: "#blog" },
   ],

@@ -8,9 +8,12 @@ import { ArrowAction } from "@/components/ui/arrow-action";
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 
 /**
- * Fixed header: transparent over the hero, a frosted dark bar once the page
- * scrolls. On small screens the links move into a full-screen menu built on
- * <dialog>, which gives focus trapping and Escape for free.
+ * Pinned header: transparent over the hero, a frosted dark bar once the page
+ * scrolls. It sits in a zero-height sticky wrapper so it starts below the
+ * credit strip at the top of the page, overlays the hero without taking up
+ * space, and pins to the top of the viewport once the strip scrolls away.
+ * On small screens the links move into a full-screen menu built on <dialog>,
+ * which gives focus trapping and Escape for free.
  */
 type SiteHeaderProps = {
   nav: NavItem[];
@@ -41,72 +44,74 @@ export function SiteHeader({ nav, email, instagram, whatsapp }: SiteHeaderProps)
       {/* Anything above this line counts as "at the top". */}
       <div ref={sentinelRef} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24" />
 
-      <header
-        data-on-dark
-        className={cn(
-          "fixed inset-x-0 top-0 z-50 text-white transition-[background-color,backdrop-filter,box-shadow] duration-500",
-          scrolled
-            ? "bg-ink/72 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150"
-            : "bg-transparent",
-        )}
-      >
-        <div
+      <div className="sticky top-0 z-50 h-0">
+        <header
+          data-on-dark
           className={cn(
-            "anim-fade-up mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 transition-[height] duration-500 sm:px-8 xl:px-12",
-            scrolled ? "h-16" : "h-18 sm:h-20",
+            "absolute inset-x-0 top-0 text-white transition-[background-color,backdrop-filter,box-shadow] duration-500",
+            scrolled
+              ? "bg-ink/72 shadow-[0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl backdrop-saturate-150"
+              : "bg-transparent",
           )}
-          style={delay(100)}
         >
-          <div className="flex items-center gap-10">
-            <a href="#top" className="flex items-baseline gap-2 text-[15px] font-semibold tracking-[-0.02em]">
-              <span>Shah Meer</span>
-              <span className="hidden font-mono text-[10px] font-normal tracking-[0.14em] text-white/60 uppercase sm:inline">
-                Photo · Film
+          <div
+            className={cn(
+              "anim-fade-up mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-5 transition-[height] duration-500 sm:px-8 xl:px-12",
+              scrolled ? "h-16" : "h-18 sm:h-20",
+            )}
+            style={delay(100)}
+          >
+            <div className="flex items-center gap-10">
+              <a href="#top" className="flex items-baseline gap-2 text-[15px] font-semibold tracking-[-0.02em]">
+                <span>Shah Meer</span>
+                <span className="hidden font-mono text-[10px] font-normal tracking-[0.14em] text-white/60 uppercase sm:inline">
+                  Photo · Film
+                </span>
+              </a>
+              <nav aria-label="Primary" className="hidden lg:block">
+                <ul className="flex items-center gap-7 text-sm font-medium">
+                  {nav.map((item) => (
+                    <li key={item.href}>
+                      <a
+                        href={item.href}
+                        className="relative py-2 text-white/85 transition-colors after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-out-expo hover:text-white hover:after:scale-x-100"
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+
+            <a
+              href={whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-2 text-[13px] font-semibold tracking-[0.02em] text-white uppercase underline-offset-4 hover:underline lg:flex"
+            >
+              <WhatsAppIcon size={16} className="text-[#25D366]" />
+              <span>
+                WhatsApp <span className="tabular-nums">{whatsapp.display}</span>
               </span>
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
-            <nav aria-label="Primary" className="hidden lg:block">
-              <ul className="flex items-center gap-7 text-sm font-medium">
-                {nav.map((item) => (
-                  <li key={item.href}>
-                    <a
-                      href={item.href}
-                      className="relative py-2 text-white/85 transition-colors after:absolute after:inset-x-0 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:ease-out-expo hover:text-white hover:after:scale-x-100"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+
+            <button
+              type="button"
+              onClick={openMenu}
+              className="inline-flex h-10 items-center gap-2.5 rounded-tile bg-white/12 px-3.5 text-sm font-medium ring-1 ring-white/25 backdrop-blur-md transition-colors hover:bg-white/20 lg:hidden"
+              aria-haspopup="dialog"
+            >
+              <span aria-hidden="true" className="flex w-4 flex-col gap-[5px]">
+                <span className="h-px w-full bg-current" />
+                <span className="h-px w-2/3 bg-current" />
+              </span>
+              Menu
+            </button>
           </div>
-
-          <a
-            href={whatsapp.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden items-center gap-2 text-[13px] font-semibold tracking-[0.02em] text-white uppercase underline-offset-4 hover:underline lg:flex"
-          >
-            <WhatsAppIcon size={16} className="text-[#25D366]" />
-            <span>
-              WhatsApp <span className="tabular-nums">{whatsapp.display}</span>
-            </span>
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-
-          <button
-            type="button"
-            onClick={openMenu}
-            className="inline-flex h-10 items-center gap-2.5 rounded-tile bg-white/12 px-3.5 text-sm font-medium ring-1 ring-white/25 backdrop-blur-md transition-colors hover:bg-white/20 lg:hidden"
-            aria-haspopup="dialog"
-          >
-            <span aria-hidden="true" className="flex w-4 flex-col gap-[5px]">
-              <span className="h-px w-full bg-current" />
-              <span className="h-px w-2/3 bg-current" />
-            </span>
-            Menu
-          </button>
-        </div>
-      </header>
+        </header>
+      </div>
 
       <dialog
         ref={menuRef}

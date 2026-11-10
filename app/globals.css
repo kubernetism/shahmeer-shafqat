@@ -32,6 +32,11 @@
 }
 
 @layer base {
+  :root {
+    /* Height of the one-line credit strip above the header (see "Credit marquee"). */
+    --credit-strip-h: 1.75rem;
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
@@ -244,6 +249,101 @@
       animation-range: cover 0% cover 100%;
     }
   }
+}
+
+/* ---------- Credit marquee (components/credit-marquee.tsx) ---------- */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee {
+  overflow: clip;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+
+.marquee-copy {
+  flex: none;
+  white-space: nowrap;
+  line-height: var(--credit-strip-h);
+}
+
+/* Margins on both sides keep every copy the same width, so -50% is seamless. */
+.marquee-sep {
+  margin-inline: 2.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    /* -50% is two copies (about 5,100px), so 110s reads at roughly 46px/s. */
+    animation: marquee 110s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/*
+ * Static fallback: the text wraps and only the first copy shows. Used with
+ * reduced motion, and while a keyboard user focuses the email link, which
+ * could otherwise be scrolled out of view.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    display: block;
+    width: auto;
+  }
+  .marquee-copy {
+    padding: 0.375rem 1.25rem;
+    text-align: center;
+    line-height: 1.9;
+    white-space: normal;
+  }
+  .marquee-copy[aria-hidden],
+  .marquee-sep {
+    display: none;
+  }
+}
+
+/* On phones the wrapped text would run to 7-8 lines, so it stays one swipeable line instead. */
+@media (prefers-reduced-motion: reduce) and (width < 40rem) {
+  .marquee {
+    overflow: auto hidden;
+    scrollbar-width: none;
+  }
+  .marquee::-webkit-scrollbar {
+    display: none;
+  }
+  .marquee-track {
+    width: max-content;
+  }
+  .marquee-copy {
+    padding: 0 1.25rem;
+    text-align: start;
+    line-height: var(--credit-strip-h);
+    white-space: nowrap;
+  }
+}
+
+.marquee:has(:focus-visible) .marquee-track {
+  display: block;
+  width: auto;
+  animation: none;
+}
+.marquee:has(:focus-visible) .marquee-copy {
+  padding: 0.375rem 1.25rem;
+  text-align: center;
+  line-height: 1.9;
+  white-space: normal;
+}
+.marquee:has(:focus-visible) .marquee-copy[aria-hidden],
+.marquee:has(:focus-visible) .marquee-sep {
+  display: none;
 }
 
 /* ---------- Ruler: the camera lens distance scale ---------- */

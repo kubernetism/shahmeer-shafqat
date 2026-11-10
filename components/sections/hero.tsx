@@ -20,7 +20,7 @@ export function Hero() {
       id="top"
       data-on-dark
       aria-labelledby="hero-title"
-      className="relative isolate overflow-clip bg-[#552789] text-white xl:h-[clamp(720px,100svh,1000px)] xl:bg-[linear-gradient(to_bottom,#4f1f88_0%,#6724c0_25%,#6221b5_50%,#581ba3_75%,#552789_100%)]"
+      className="relative isolate overflow-clip bg-[#552789] text-white xl:h-[clamp(720px,calc(100svh-var(--credit-strip-h)),1000px)] xl:bg-[linear-gradient(to_bottom,#4f1f88_0%,#6724c0_25%,#6221b5_50%,#581ba3_75%,#552789_100%)]"
     >
       {/* Photo */}
       <div

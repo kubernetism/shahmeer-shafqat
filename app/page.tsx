@@ -10,6 +10,7 @@ import { Cta } from "@/components/sections/cta";
 import { Blog } from "@/components/sections/blog";
 import { ContactAndFooter } from "@/components/sections/contact";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
+import { CreditMarquee } from "@/components/credit-marquee";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       >
         Skip to content
       </a>
+      <CreditMarquee />
       <SiteHeader nav={nav} email={site.email} instagram={site.instagram} whatsapp={site.whatsapp} />
       <main id="main">
         <Hero />

@@ -6,8 +6,8 @@ import { cn } from "@/lib/cn";
 
 /**
  * Floating "Chat on WhatsApp" button. It stays out of the way over the hero
- * and hides while the contact section (which has its own WhatsApp button) is
- * on screen. Modal dialogs (lightbox, menu) sit in the top layer above it.
+ * and hides while the contact section (which has its own WhatsApp button) or
+ * the footer (WhatsApp link, plus the credit strip it would cover) is on screen. Modal dialogs (lightbox, menu) sit in the top layer above it.
  */
 export function WhatsAppFloat({ href }: { href: string }) {
   const [visible, setVisible] = useState(false);
@@ -15,21 +15,24 @@ export function WhatsAppFloat({ href }: { href: string }) {
   useEffect(() => {
     const hero = document.getElementById("top");
     const contact = document.getElementById("contact");
-    if (!hero || !contact) return;
+    const footer = document.getElementById("site-footer");
+    if (!hero || !contact || !footer) return;
     const inView = new Map<Element, boolean>([
       [hero, true],
       [contact, false],
+      [footer, false],
     ]);
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) inView.set(entry.target, entry.isIntersecting);
-        setVisible(!inView.get(hero) && !inView.get(contact));
+        setVisible(!inView.get(hero) && !inView.get(contact) && !inView.get(footer));
       },
       // The hero counts as "gone" once its last 20% has scrolled off.
       { rootMargin: "0px 0px -20% 0px" },
     );
     observer.observe(hero);
     observer.observe(contact);
+    observer.observe(footer);
     return () => observer.disconnect();
   }, []);
 

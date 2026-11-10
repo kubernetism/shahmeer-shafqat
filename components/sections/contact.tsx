@@ -4,6 +4,7 @@ import { ArrowAction } from "@/components/ui/arrow-action";
 import { container } from "@/components/ui/eyebrow";
 import { Ruler } from "@/components/ui/ruler";
 import { ContactForm } from "@/components/contact-form";
+import { CreditMarquee } from "@/components/credit-marquee";
 import { cn } from "@/lib/cn";
 
 /* Contact and footer share one full-bleed photo, as in the design. */
@@ -89,67 +90,70 @@ export function ContactAndFooter() {
         </div>
       </section>
 
-      <footer className={cn(container, "pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] md:pt-36")}>
-        <Ruler className="h-8 text-white/35" fade="right" scrub={false} />
-        <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-8">
-          <div className="col-span-2 lg:col-span-5">
-            <p className="text-lg font-semibold tracking-[-0.02em]">{site.name}</p>
-            <p className="mt-3 max-w-[40ch] text-[15px] leading-relaxed text-white/70">{footer.tagline}</p>
-          </div>
-          <FooterColumn title="Links" items={footer.links} className="lg:col-span-2 lg:col-start-7" />
-          <FooterColumn title="Services" items={footer.services} className="lg:col-span-2" />
-          <div className="lg:col-span-2">
-            <p className="font-mono text-[10px] tracking-[0.14em] text-white/50 uppercase">Contact</p>
-            <ul className="mt-4 grid gap-2.5 text-[15px]">
-              <li>
-                <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                  Instagram
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a href={site.whatsapp.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                  WhatsApp
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a href={site.phone.tel} className="whitespace-nowrap tabular-nums hover:underline">
-                  {site.phone.display}
-                </a>
-              </li>
-              {site.email ? (
+      <footer id="site-footer" className="pt-24 md:pt-36">
+        <div className={cn(container, "pb-8")}>
+          <Ruler className="h-8 text-white/35" fade="right" scrub={false} />
+          <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-12 lg:gap-8">
+            <div className="col-span-2 lg:col-span-5">
+              <p className="text-lg font-semibold tracking-[-0.02em]">{site.name}</p>
+              <p className="mt-3 max-w-[40ch] text-[15px] leading-relaxed text-white/70">{footer.tagline}</p>
+            </div>
+            <FooterColumn title="Links" items={footer.links} className="lg:col-span-2 lg:col-start-7" />
+            <FooterColumn title="Services" items={footer.services} className="lg:col-span-2" />
+            <div className="lg:col-span-2">
+              <p className="font-mono text-[10px] tracking-[0.14em] text-white/50 uppercase">Contact</p>
+              <ul className="mt-4 grid gap-2.5 text-[15px]">
                 <li>
-                  <a href={`mailto:${site.email}`} className="hover:underline">
-                    Email
+                  <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                    Instagram
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>
-              ) : null}
-            </ul>
+                <li>
+                  <a href={site.whatsapp.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                    WhatsApp
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+                <li>
+                  <a href={site.phone.tel} className="whitespace-nowrap tabular-nums hover:underline">
+                    {site.phone.display}
+                  </a>
+                </li>
+                {site.email ? (
+                  <li>
+                    <a href={`mailto:${site.email}`} className="hover:underline">
+                      Email
+                    </a>
+                  </li>
+                ) : null}
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-6 text-xs text-white/55">
+            <p>
+              © {site.copyrightYear} {site.name} · {site.brand}
+            </p>
+            <nav aria-label="Footer">
+              <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                {nav.map((item) => (
+                  <li key={item.href}>
+                    <a href={item.href} className="hover:text-white">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <a href="#top" className="text-white/80 hover:text-white">
+                    Back to top ↑
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
-
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-white/15 pt-6 text-xs text-white/55">
-          <p>
-            © {site.copyrightYear} {site.name} · {site.brand}
-          </p>
-          <nav aria-label="Footer">
-            <ul className="flex flex-wrap gap-x-5 gap-y-2">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="hover:text-white">
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a href="#top" className="text-white/80 hover:text-white">
-                  Back to top ↑
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <CreditMarquee className="border-t border-white/10 pb-[env(safe-area-inset-bottom)]" />
       </footer>
     </div>
   );

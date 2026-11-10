@@ -523,3 +523,26 @@ export const footer = {
     { label: "Films", href: "#films" },
   ],
 };
+
+/** Developer credit shown in the scrolling strips at the top of the page and the bottom of the footer. */
+export const credit = {
+  developer: "Syed Safdar Ali Shah",
+  role: "AI & Software Engineer",
+  skills: [
+    "Agents",
+    "Software",
+    "Portfolios",
+    "E-commerce Websites",
+    "POS",
+    "Inventory Management",
+    "FinOps",
+    "DevOps",
+    "AI Engineering",
+    "Agentic Applications",
+    "RAGs",
+    "Chatbots",
+    "Agentic Workflows",
+    "and more",
+  ],
+  email: "programmersafdar@live.com",
+} as const;
